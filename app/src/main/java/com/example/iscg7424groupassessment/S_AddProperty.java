@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class SupplierAddProperty extends AppCompatActivity {
+public class S_AddProperty extends AppCompatActivity {
 
     EditText etPropertyName, etLocation, etPrice, etDescription;
     ImageView ivPropertyImage;

@@ -26,7 +26,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SupplierMainPage"
+            android:name=".S_MainPage"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -50,7 +50,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SupplierAddProperty"
+            android:name=".S_AddProperty"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -58,7 +58,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SupplierBookingRequest"
+            android:name=".S_BookingRequest"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

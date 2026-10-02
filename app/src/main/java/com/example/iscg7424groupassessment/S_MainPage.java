@@ -12,7 +12,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-public class SupplierMainPage extends AppCompatActivity {
+public class S_MainPage extends AppCompatActivity {
 
     CardView cvAddProperty, cvMyProperties, cvBookingRequests;
     ImageButton ibSupplierProfile;
@@ -39,7 +39,7 @@ public class SupplierMainPage extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(getApplicationContext(),
-                    SupplierAddProperty.class);
+                    S_AddProperty.class);
             startActivity(intent);
         });
 
@@ -59,7 +59,7 @@ public class SupplierMainPage extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(getApplicationContext(),
-                    SupplierBookingRequest.class
+                    S_BookingRequest.class
             );
             startActivity(intent);
         });
