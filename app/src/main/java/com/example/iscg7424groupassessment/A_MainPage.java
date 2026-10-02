@@ -10,7 +10,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-public class AdminMainPage extends AppCompatActivity {
+public class A_MainPage extends AppCompatActivity {
 
     CardView cvUserManagement, cvPropertyManagement, cvBookingManagement;
     Button btnALogout;

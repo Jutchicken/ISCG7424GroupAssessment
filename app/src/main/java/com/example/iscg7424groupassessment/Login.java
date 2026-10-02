@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
                     "Welcome, " + id,
                     Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(),
-                    AdminMainPage.class);
+                    A_MainPage.class);
             startActivity(intent);
             finish();
         }
