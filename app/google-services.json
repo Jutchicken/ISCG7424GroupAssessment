@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1022855088084",
-    "project_id": "mobdevgroupassessment",
-    "storage_bucket": "mobdevgroupassessment.firebasestorage.app"
+    "project_number": "694460883683",
+    "project_id": "mobdevgroupassessment-664a8",
+    "storage_bucket": "mobdevgroupassessment-664a8.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1022855088084:android:a6d9febf884a94d01d7841",
+        "mobilesdk_app_id": "1:694460883683:android:d4a1186120305269851bd6",
         "android_client_info": {
           "package_name": "com.example.iscg7424groupassessment"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDkVzfGxCVjP-L5Jih5jr6WC2IU_xN2JoE"
+          "current_key": "AIzaSyACVIbvyrOFY-XuzhwOetob2ZiCJxS9t7M"
         }
       ],
       "services": {
