@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -12,8 +13,9 @@ import androidx.cardview.widget.CardView;
 
 public class A_MainPage extends AppCompatActivity {
 
-    CardView cvUserManagement, cvPropertyManagement, cvBookingManagement;
+    CardView cvUserManagement, cvMenuManagement, cvTableManagement, cvTableBookingManagement;
     Button btnALogout;
+    TextView tvUserCount, tvMenuItemCount, tvTableCount, tvTodayBookingCount;
     ImageButton ibAdminProfile;
 
     @Override
@@ -23,8 +25,15 @@ public class A_MainPage extends AppCompatActivity {
         setContentView(R.layout.activity_admin_main_page);
 
         cvUserManagement = findViewById(R.id.cv_userManagement);
-        cvPropertyManagement = findViewById(R.id.cv_propertyManagement);
-        cvBookingManagement = findViewById(R.id.cv_bookingManagement);
+        cvMenuManagement = findViewById(R.id.cv_menuManagement);
+        cvTableManagement = findViewById(R.id.cv_tableManagement);
+        cvTableBookingManagement = findViewById(R.id.cv_tableBookingManagement);
+
+        tvUserCount = findViewById(R.id.tv_userCount);
+        tvMenuItemCount = findViewById(R.id.tv_menuItemCount);
+        tvTableCount = findViewById(R.id.tv_tableCount);
+        tvTodayBookingCount = findViewById(R.id.tv_todayBookingCount);
+
         btnALogout = findViewById(R.id.btn_aLogout);
         ibAdminProfile = findViewById(R.id.ib_adminProfile);
 
@@ -34,15 +43,27 @@ public class A_MainPage extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         });
 
-        cvPropertyManagement.setOnClickListener(v -> {
+        cvUserManagement.setOnClickListener(v -> {
             Toast.makeText(getApplicationContext(),
-                    "Feature for Property management",
+                    "Feature for Menu management",
                     Toast.LENGTH_SHORT).show();
         });
 
-        cvBookingManagement.setOnClickListener(v -> {
+        cvMenuManagement.setOnClickListener(v -> {
             Toast.makeText(getApplicationContext(),
-                    "Feature for Booking management",
+                    "Feature for Menu management",
+                    Toast.LENGTH_SHORT).show();
+        });
+
+        cvTableManagement.setOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(),
+                    "Feature for Table management",
+                    Toast.LENGTH_SHORT).show();
+        });
+
+        cvTableBookingManagement.setOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(),
+                    "Feature for Table booking management",
                     Toast.LENGTH_SHORT).show();
         });
 
