@@ -14,7 +14,7 @@ import androidx.cardview.widget.CardView;
 
 public class S_MainPage extends AppCompatActivity {
 
-    CardView cvAddProperty, cvMyProperties, cvBookingRequests;
+    CardView cvMyProperties, cvBookingRequests;
     ImageButton ibSupplierProfile;
     TextView tvPropertyCount, tvRequestCount;
 
@@ -24,7 +24,6 @@ public class S_MainPage extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_supplier_main_page);
 
-        cvAddProperty = findViewById(R.id.cv_addProperty);
         cvMyProperties = findViewById(R.id.cv_myProperties);
         cvBookingRequests = findViewById(R.id.cv_bookingRequests);
         ibSupplierProfile = findViewById(R.id.ib_supplierProfile);
@@ -33,15 +32,6 @@ public class S_MainPage extends AppCompatActivity {
 
         loadPropertyCount();
 
-        cvAddProperty.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(),
-                    "Add Property Selected",
-                    Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(getApplicationContext(),
-                    S_AddProperty.class);
-            startActivity(intent);
-        });
 
         cvMyProperties.setOnClickListener(v -> {
             Toast.makeText(getApplicationContext(),
