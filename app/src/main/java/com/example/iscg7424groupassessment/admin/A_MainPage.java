@@ -1,4 +1,4 @@
-package com.example.iscg7424groupassessment;
+package com.example.iscg7424groupassessment.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
+import com.example.iscg7424groupassessment.Login;
+import com.example.iscg7424groupassessment.R;
 
 public class A_MainPage extends AppCompatActivity {
 
@@ -50,9 +53,8 @@ public class A_MainPage extends AppCompatActivity {
         });
 
         cvMenuManagement.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(),
-                    "Feature for Menu management",
-                    Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(A_MainPage.this, A_MenuManagement.class);
+            startActivity(intent);
         });
 
         cvTableManagement.setOnClickListener(v -> {

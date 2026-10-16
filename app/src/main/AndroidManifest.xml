@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".A_MainPage"
+            android:name=".admin.A_MainPage"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -59,6 +59,10 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".S_BookingRequest"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".admin.A_MenuManagement"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

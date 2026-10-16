@@ -12,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.iscg7424groupassessment.admin.A_MainPage;
+
 public class Login extends AppCompatActivity {
 
     EditText etID, etPassword;
@@ -42,7 +44,7 @@ public class Login extends AppCompatActivity {
             etID.setText("");
             etPassword.setText("");
         }
-        else if (id.equals("admin") && password.equals("admin")){
+        else if (id.equals("com/example/iscg7424groupassessment/admin") && password.equals("com/example/iscg7424groupassessment/admin")){
             Toast.makeText(getApplicationContext(),
                     "Welcome, " + id,
                     Toast.LENGTH_SHORT).show();
@@ -67,6 +69,15 @@ public class Login extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(),
                     CustomerMainPage.class);
+            startActivity(intent);
+            finish();
+        }
+        else if (id.equals("admin") && password.equals("admin")){
+            Toast.makeText(getApplicationContext(),
+                    "Welcome, " + id,
+                    Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(),
+                    A_MainPage.class);
             startActivity(intent);
             finish();
         }
