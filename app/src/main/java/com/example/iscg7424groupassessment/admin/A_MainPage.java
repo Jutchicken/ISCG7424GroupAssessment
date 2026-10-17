@@ -2,6 +2,7 @@ package com.example.iscg7424groupassessment.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -52,15 +53,20 @@ public class A_MainPage extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         });
 
-        cvMenuManagement.setOnClickListener(v -> {
-            Intent intent = new Intent(A_MainPage.this, A_MenuManagement.class);
-            startActivity(intent);
+        cvMenuManagement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(A_MainPage.this, A_MenuManagement.class);
+                startActivity(intent);
+            }
         });
 
-        cvTableManagement.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(),
-                    "Feature for Table management",
-                    Toast.LENGTH_SHORT).show();
+        cvTableManagement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(A_MainPage.this, A_TableManagement.class);
+                startActivity(intent);
+            }
         });
 
         cvTableBookingManagement.setOnClickListener(v -> {

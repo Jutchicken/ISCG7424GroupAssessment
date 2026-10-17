@@ -65,6 +65,10 @@
             android:name=".admin.A_MenuManagement"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".admin.A_TableManagement"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
