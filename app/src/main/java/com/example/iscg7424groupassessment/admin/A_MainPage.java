@@ -41,16 +41,13 @@ public class A_MainPage extends AppCompatActivity {
         btnALogout = findViewById(R.id.btn_aLogout);
         ibAdminProfile = findViewById(R.id.ib_adminProfile);
 
-        cvUserManagement.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(),
-                    "Feature for User management",
-                    Toast.LENGTH_SHORT).show();
-        });
-
-        cvUserManagement.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(),
-                    "Feature for Menu management",
-                    Toast.LENGTH_SHORT).show();
+        cvUserManagement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),
+                        "Feature for User management",
+                        Toast.LENGTH_SHORT).show();
+            }
         });
 
         cvMenuManagement.setOnClickListener(new View.OnClickListener() {
@@ -69,24 +66,30 @@ public class A_MainPage extends AppCompatActivity {
             }
         });
 
-        cvTableBookingManagement.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(),
-                    "Feature for Table booking management",
-                    Toast.LENGTH_SHORT).show();
+        cvTableBookingManagement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(A_MainPage.this, A_BookingManagement.class);
+                startActivity(intent);
+            }
         });
 
-        ibAdminProfile.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(),
-                    "Feature for Admin profile",
-                    Toast.LENGTH_SHORT).show();
+        ibAdminProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),
+                        "Feature for Admin profile",
+                        Toast.LENGTH_SHORT).show();
+            }
         });
 
-        btnALogout.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(),
-                    Login.class);
-            startActivity(intent);
-            finish();
+        btnALogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+                finish();
+            }
         });
-
     }
 }

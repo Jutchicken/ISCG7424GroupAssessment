@@ -69,6 +69,10 @@
             android:name=".admin.A_TableManagement"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".admin.A_BookingManagement"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
