@@ -44,9 +44,8 @@ public class A_MainPage extends AppCompatActivity {
         cvUserManagement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),
-                        "Feature for User management",
-                        Toast.LENGTH_SHORT).show();
+               Intent intent = new Intent(A_MainPage.this, A_UserManagement.class);
+               startActivity(intent);
             }
         });
 
