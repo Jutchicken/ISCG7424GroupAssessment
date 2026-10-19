@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Add Property"
+                android:text="Add Item"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -68,14 +68,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Choose Property Image" />
+            android:text="Choose Item Image" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="Property Name"
+            android:text="Item Name"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -83,23 +83,7 @@
             android:id="@+id/et_pPropertyName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="e.g. Modern 2 Bedroom House"
-            android:inputType="text" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Location"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/et_pLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="e.g. Auckland"
+            android:hint="e.g. Lenovo Legion 5"
             android:inputType="text" />
 
 
@@ -112,10 +96,26 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/et_pLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="e.g. $700"
+            android:inputType="text" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Specification"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
             android:id="@+id/et_pPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="e.g. $550 / week"
+            android:hint="e.g. CPU: AMD Ryzen 7 6800H"
             android:inputType="text" />
 
 
