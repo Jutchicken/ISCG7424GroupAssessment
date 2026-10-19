@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Manage staff and customers"
+                android:text="Manage staff"
                 android:textSize="13sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -109,6 +109,7 @@
         android:layout_weight="1.2"
         android:orientation="horizontal">
 
+        <!-- Menu -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_menuManagement"
             android:layout_width="0dp"
@@ -144,6 +145,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Table -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_tableManagement"
             android:layout_width="0dp"
@@ -180,6 +182,7 @@
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
+    <!-- Table Booking -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_tableBookingManagement"
         android:layout_width="match_parent"
