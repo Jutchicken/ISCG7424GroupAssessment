@@ -10,13 +10,13 @@
         android:id="@+id/tv_userRole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#D5EEDF"
+        android:background="#F4D9E8"
         android:paddingStart="9dp"
         android:paddingTop="3dp"
         android:paddingEnd="9dp"
         android:paddingBottom="3dp"
-        android:text="Customer"
-        android:textColor="#17703F"
+        android:text="Staff"
+        android:textColor="#A3327A"
         android:textSize="12sp"/>
 
     <androidx.cardview.widget.CardView
@@ -60,13 +60,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:background="#D5EEDF"
+                        android:background="#F4D9E8"
                         android:paddingStart="6dp"
                         android:paddingTop="1dp"
                         android:paddingEnd="6dp"
                         android:paddingBottom="1dp"
-                        android:text="cus"
-                        android:textColor="#17703F"
+                        android:text="stf"
+                        android:textColor="#A3327A"
                         android:textSize="10sp"/>
                 </LinearLayout>
 
@@ -104,7 +104,6 @@
                         android:textStyle="bold"/>
                 </LinearLayout>
 
-                <!-- Edit and Delete, pushed to the right edge -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -150,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="021 123 4567"
-                android:textColor="#2B7A99"
+                android:textColor="#A3327A"
                 android:textSize="12sp"
                 android:textStyle="bold"/>
         </LinearLayout>
