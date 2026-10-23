@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".S_MainPage"
+    tools:context=".staff.S_MainPage"
     android:fillViewport="true">
 
     <LinearLayout
@@ -42,16 +42,6 @@
                     android:textSize="15sp" />
 
             </LinearLayout>
-
-            <!-- Profile Button -->
-            <ImageButton
-                android:id="@+id/ib_supplierProfile"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Profile"
-                android:src="@drawable/ic_launcher_foreground" />
-
         </LinearLayout>
 
 
@@ -75,7 +65,7 @@
 
             <!-- My Properties -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_myProperties"
+                android:id="@+id/cv_confirmedStaffBooking"
                 android:layout_width="0dp"
                 android:layout_height="140dp"
                 android:layout_marginEnd="8dp"
@@ -95,18 +85,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="My Properties"
+                        android:text="Confimred\nBooking"
+                        android:textAlignment="center"
                         android:textSize="20sp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
 
             <!-- Booking Requests -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_bookingRequests"
+                android:id="@+id/cv_bookingStaffRequests"
                 android:layout_width="0dp"
                 android:layout_height="140dp"
                 android:layout_marginStart="8dp"
@@ -171,7 +160,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_propertyCount"
+                        android:id="@+id/tv_bookingStaffCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -181,7 +170,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Properties"
+                        android:text="Bookings"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -205,7 +194,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_requestCount"
+                        android:id="@+id/tv_requestStaffCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"

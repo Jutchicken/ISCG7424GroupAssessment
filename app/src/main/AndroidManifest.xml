@@ -26,7 +26,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".S_MainPage"
+            android:name=".staff.S_MainPage"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -50,15 +50,11 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".S_AddProperty"
+            android:name=".staff.S_ConfirmedBookings"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SupplierMyProperties"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".S_BookingRequest"
+            android:name=".staff.S_BookingRequest"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity

@@ -5,9 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".S_BookingRequest"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".staff.S_ConfirmedBookings">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,24 +17,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Booking Requests"
+            android:text="My Properties"
             android:textSize="28sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp"/>
 
         <Button
-            android:onClick="btnBack"
-            android:layout_marginStart="70dp"
+            android:onClick="btnSBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"
             android:text="Back"/>
 
     </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerBookingRequests"
+        android:id="@+id/rv_properties"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+
 
 </LinearLayout>

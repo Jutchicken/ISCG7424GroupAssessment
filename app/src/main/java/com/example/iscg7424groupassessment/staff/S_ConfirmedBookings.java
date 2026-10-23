@@ -1,4 +1,4 @@
-package com.example.iscg7424groupassessment;
+package com.example.iscg7424groupassessment.staff;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,12 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.iscg7424groupassessment.PSAdapter;
+import com.example.iscg7424groupassessment.Property;
+import com.example.iscg7424groupassessment.R;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class SupplierMyProperties extends AppCompatActivity {
+public class S_ConfirmedBookings extends AppCompatActivity {
 
     RecyclerView recyclerMyProperties;
     ArrayList<Property> propertyList;
@@ -23,7 +27,7 @@ public class SupplierMyProperties extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_supplier_my_properties);
+        setContentView(R.layout.activity_staff_my_properties);
 
         recyclerMyProperties = findViewById(R.id.rv_properties);
 

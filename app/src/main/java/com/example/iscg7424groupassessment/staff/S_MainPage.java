@@ -1,10 +1,9 @@
-package com.example.iscg7424groupassessment;
+package com.example.iscg7424groupassessment.staff;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,38 +11,39 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.iscg7424groupassessment.Login;
+import com.example.iscg7424groupassessment.R;
+
 public class S_MainPage extends AppCompatActivity {
 
-    CardView cvMyProperties, cvBookingRequests;
-    ImageButton ibSupplierProfile;
-    TextView tvPropertyCount, tvRequestCount;
+    CardView cvConfirmedBooking, cvBookingStaffRequests;
+    TextView tvBookingStaffCount, tvRequestStaffCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_supplier_main_page);
+        setContentView(R.layout.activity_staff_main_page);
 
-        cvMyProperties = findViewById(R.id.cv_myProperties);
-        cvBookingRequests = findViewById(R.id.cv_bookingRequests);
-        ibSupplierProfile = findViewById(R.id.ib_supplierProfile);
-        tvPropertyCount = findViewById(R.id.tv_propertyCount);
-        tvRequestCount = findViewById(R.id.tv_requestCount);
+        cvConfirmedBooking = findViewById(R.id.cv_confirmedStaffBooking);
+        cvBookingStaffRequests = findViewById(R.id.cv_bookingStaffRequests);
+        tvBookingStaffCount = findViewById(R.id.tv_bookingStaffCount);
+        tvRequestStaffCount = findViewById(R.id.tv_requestStaffCount);
 
-        loadPropertyCount();
+        loadBookedCount();
 
 
-        cvMyProperties.setOnClickListener(v -> {
+        cvConfirmedBooking.setOnClickListener(v -> {
             Toast.makeText(getApplicationContext(),
                     "Loading properties...",
                     Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(getApplicationContext(),
-                    SupplierMyProperties.class);
+                    S_ConfirmedBookings.class);
             startActivity(intent);
         });
 
-        cvBookingRequests.setOnClickListener(v -> {
+        cvBookingStaffRequests.setOnClickListener(v -> {
             Toast.makeText(getApplicationContext(),
                     "Loading requests...",
                     Toast.LENGTH_SHORT).show();
@@ -53,13 +53,6 @@ public class S_MainPage extends AppCompatActivity {
             );
             startActivity(intent);
         });
-
-        ibSupplierProfile.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(),
-                    "Feature that guides user to Supplier profile page",
-                    Toast.LENGTH_SHORT).show();
-        });
-
     }
 
     public void btnLogout(View view) {
@@ -76,10 +69,10 @@ public class S_MainPage extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadPropertyCount();
+        loadBookedCount();
     }
 
-    private void loadPropertyCount() {
+    private void loadBookedCount() {
         SharedPreferences preferences = getSharedPreferences(
                 "SupplierData", MODE_PRIVATE );
 
@@ -91,8 +84,8 @@ public class S_MainPage extends AppCompatActivity {
                 "requestCount", 0
         );
 
-        tvPropertyCount.setText(String.valueOf(propertyCount));
+        tvBookingStaffCount.setText(String.valueOf(propertyCount));
 
-        tvRequestCount.setText(String.valueOf(requestCount));
+        tvRequestStaffCount.setText(String.valueOf(requestCount));
     }
 }

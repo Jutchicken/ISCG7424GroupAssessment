@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.iscg7424groupassessment.admin.A_MainPage;
+import com.example.iscg7424groupassessment.staff.S_MainPage;
 
 public class Login extends AppCompatActivity {
 
@@ -63,7 +64,7 @@ public class Login extends AppCompatActivity {
             finish();
 
         }
-        else if (id.equals("customer") && password.equals("customer")){
+        else if (id.equals("com/example/iscg7424groupassessment/customer") && password.equals("com/example/iscg7424groupassessment/customer")){
             Toast.makeText(getApplicationContext(),
                     "Welcome, " + id,
                     Toast.LENGTH_SHORT).show();
