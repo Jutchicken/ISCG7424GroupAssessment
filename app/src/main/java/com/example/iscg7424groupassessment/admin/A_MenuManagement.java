@@ -1,14 +1,20 @@
 package com.example.iscg7424groupassessment.admin;
 
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +44,29 @@ public class A_MenuManagement extends AppCompatActivity {
     private DatabaseReference menuRef;
     private ValueEventListener menuListener;
 
+    private ImageView dialogPreview;
+    private String pendingImage;
+
+    private final ActivityResultLauncher<String[]> imagePicker =
+            registerForActivityResult(new ActivityResultContracts.OpenDocument(),
+                    new ActivityResultCallback<Uri>() {
+                        @Override
+                        public void onActivityResult(Uri uri) {
+                            if (uri == null) return;
+                            String encoded = FoodImage.uriToBase64(A_MenuManagement.this, uri);
+                            if (encoded == null) {
+                                Toast.makeText(A_MenuManagement.this,
+                                        "Could not load that image",
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            pendingImage = encoded;
+                            if (dialogPreview != null) {
+                                dialogPreview.setImageBitmap(FoodImage.base64ToBitmap(encoded));
+                            }
+                        }
+                    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +77,8 @@ public class A_MenuManagement extends AppCompatActivity {
         CardView cvAddMenuItem = findViewById(R.id.cv_addMenuItem);
         Button btnMenuBack = findViewById(R.id.btn_menuBack);
 
-        menuRef = FirebaseDatabase.getInstance("https://mobdevgroupassessment-664a8-default-rtdb.firebaseio.com").getReference("menu_items");
+        menuRef = FirebaseDatabase.getInstance("https://mobdevgroupassessment-664a8-default-rtdb.firebaseio.com")
+                .getReference("menu_items");
 
         adapter = new FoodAdapter(foodList, new FoodAdapter.OnFoodActionListener() {
             @Override
@@ -90,24 +120,37 @@ public class A_MenuManagement extends AppCompatActivity {
         }
     }
 
-
-
     private void showFoodDialog(final FoodItem existing) {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_admin_food_item, null);
 
+        dialogPreview = view.findViewById(R.id.iv_foodImagePreview);
+        Button btnChooseImage = view.findViewById(R.id.btn_chooseFoodImage);
         final EditText etName = view.findViewById(R.id.et_foodName);
         final EditText etDescription = view.findViewById(R.id.et_foodDescription);
         final EditText etPrice = view.findViewById(R.id.et_foodPrice);
 
-
-        //view.findViewById(R.id.iv_foodImagePreview).setVisibility(View.GONE);
-        //view.findViewById(R.id.btn_chooseFoodImage).setVisibility(View.GONE);
+        pendingImage = null;
 
         if (existing != null) {
             etName.setText(existing.getName());
             etDescription.setText(existing.getDescription());
             etPrice.setText(String.valueOf(existing.getPrice()));
+
+            pendingImage = existing.getImage();
+            if (pendingImage != null && !pendingImage.isEmpty()) {
+                Bitmap bitmap = FoodImage.base64ToBitmap(pendingImage);
+                if (bitmap != null) {
+                    dialogPreview.setImageBitmap(bitmap);
+                }
+            }
         }
+
+        btnChooseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePicker.launch(new String[]{"image/*"});
+            }
+        });
 
         final AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(existing == null ? "Add Menu Item" : "Edit Menu Item")
@@ -145,12 +188,13 @@ public class A_MenuManagement extends AppCompatActivity {
                 if (existing == null) {
                     FoodItem newItem = new FoodItem(
                             UUID.randomUUID().toString(),
-                            name, description, price, null);
+                            name, description, price, pendingImage);
                     saveFoodItem(newItem, true);
                 } else {
                     existing.setName(name);
                     existing.setDescription(description);
                     existing.setPrice(price);
+                    existing.setImage(pendingImage);
                     saveFoodItem(existing, false);
                 }
 
@@ -158,8 +202,6 @@ public class A_MenuManagement extends AppCompatActivity {
             }
         });
     }
-
-
 
     private void confirmDelete(final FoodItem item) {
         new AlertDialog.Builder(this)
@@ -174,7 +216,6 @@ public class A_MenuManagement extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .show();
     }
-
 
     private void loadFoodItems() {
         menuListener = new ValueEventListener() {
@@ -239,7 +280,6 @@ public class A_MenuManagement extends AppCompatActivity {
                     }
                 });
     }
-
 
     private void refreshList() {
         adapter.notifyDataSetChanged();
