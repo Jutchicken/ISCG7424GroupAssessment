@@ -34,25 +34,26 @@ public class S_MainPage extends AppCompatActivity {
 
 
         cvConfirmedBooking.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(),
-                    "Loading properties...",
-                    Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(getApplicationContext(),
-                    S_ConfirmedBookings.class);
+            Intent intent = new Intent(
+                    S_MainPage.this,
+                    S_ConfirmedBookings.class
+            );
             startActivity(intent);
         });
 
         cvBookingStaffRequests.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(),
-                    "Loading requests...",
-                    Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(getApplicationContext(),
+            Intent intent = new Intent(
+                    S_MainPage.this,
                     S_BookingRequest.class
             );
             startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadBookedCount();
     }
 
     public void btnLogout(View view) {
@@ -66,26 +67,28 @@ public class S_MainPage extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadBookedCount();
-    }
-
     private void loadBookedCount() {
         SharedPreferences preferences = getSharedPreferences(
-                "SupplierData", MODE_PRIVATE );
+                "BookingData",
+                MODE_PRIVATE
+        );
 
-        int propertyCount = preferences.getInt(
-                "propertyCount", 0
+        int bookingCount = preferences.getInt(
+                "bookingCount",
+                0
         );
 
         int requestCount = preferences.getInt(
-                "requestCount", 0
+                "requestCount",
+                0
         );
 
-        tvBookingStaffCount.setText(String.valueOf(propertyCount));
+        tvBookingStaffCount.setText(
+                String.valueOf(bookingCount)
+        );
 
-        tvRequestStaffCount.setText(String.valueOf(requestCount));
+        tvRequestStaffCount.setText(
+                String.valueOf(requestCount)
+        );
     }
 }

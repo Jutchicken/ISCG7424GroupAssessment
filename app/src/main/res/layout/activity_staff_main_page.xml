@@ -55,7 +55,7 @@
             android:textStyle="bold"/>
 
 
-        <!-- My Properties + Booking Requests -->
+        <!-- Confirmed Booking + Booking Requests -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             android:orientation="horizontal">
 
 
-            <!-- My Properties -->
+            <!-- Booking Management -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_confirmedStaffBooking"
                 android:layout_width="0dp"
@@ -144,7 +144,7 @@
             android:orientation="horizontal">
 
 
-            <!-- Display Property Count -->
+            <!-- Display Confirmed Count -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="110dp"
