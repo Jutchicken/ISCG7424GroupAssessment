@@ -1,5 +1,6 @@
 package com.example.iscg7424groupassessment.admin;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,15 +46,18 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodHolder> {
         holder.tvPrice.setText(String.format(Locale.getDefault(), "$ %.2f", item.getPrice()));
         holder.tvDescription.setText(item.getDescription());
 
+        Bitmap bitmap = null;
+
         String image = item.getImage();
-        if(image == null || image.isEmpty()) {
-            holder.ivImage.setImageResource(android.R.drawable.ic_menu_gallery);
+
+        if(image != null && !image.isEmpty()) {
+            bitmap = FoodImage.base64ToBitmap(image);
+        }
+
+        if(image != null) {
+            holder.ivImage.setImageBitmap(bitmap);
         } else {
-            try{
-                holder.ivImage.setImageURI(Uri.parse(image));
-            } catch (SecurityException e){
-                holder.ivImage.setImageResource(android.R.drawable.ic_menu_gallery);
-            }
+            holder.ivImage.setImageResource(android.R.drawable.ic_menu_gallery);
         }
 
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {

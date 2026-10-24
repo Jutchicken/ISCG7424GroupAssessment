@@ -79,8 +79,6 @@
                 android:background="#BDBDBD"
                 android:contentDescription="Menu item image"
                 android:scaleType="centerCrop" />
-
-
         </LinearLayout>
     </LinearLayout>
 
