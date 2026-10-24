@@ -76,12 +76,12 @@ public class A_UserManagement extends AppCompatActivity {
         adapter = new UserAdapter(staffList, new UserAdapter.OnUserActionListener() {
             @Override
             public void onEdit(UserItem user) {
-                //showUserDialog(user);
+                showUserDialog(user);
             }
 
             @Override
             public void onDelete(UserItem user) {
-                //confirmDelete(user);
+                confirmDelete(user);
             }
         });
 
@@ -91,7 +91,7 @@ public class A_UserManagement extends AppCompatActivity {
         cvAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showUserDialog(null);
+                showUserDialog(null);
             }
         });
 
@@ -102,18 +102,18 @@ public class A_UserManagement extends AppCompatActivity {
                 finish();
             }
         });
-        //loadUsers();
+        loadUsers();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(userRef != null && userListener != null) {
+        if (userRef != null && userListener != null) {
             userRef.removeEventListener(userListener);
         }
     }
 
-    private void showUserDialog(final UserItem existing){
+    private void showUserDialog(final UserItem existing) {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_admin_user, null);
 
         final EditText etLoginId = view.findViewById(R.id.et_userLoginId);
@@ -121,7 +121,7 @@ public class A_UserManagement extends AppCompatActivity {
         final EditText etEmail = view.findViewById(R.id.et_userEmail);
         final EditText etPhone = view.findViewById(R.id.et_userPhone);
 
-        if(existing != null) {
+        if (existing != null) {
             etLoginId.setText(existing.getLoginId());
             etLoginId.setEnabled(false);
 
@@ -147,28 +147,28 @@ public class A_UserManagement extends AppCompatActivity {
                 String email = etEmail.getText().toString().trim();
                 String phone = etPhone.getText().toString().trim();
 
-                if(loginId.isEmpty()) {
+                if (loginId.isEmpty()) {
                     etLoginId.setError("Login ID required");
                     return;
                 }
                 if (loginId.contains(" ")) {
                     etLoginId.setError("No spaces allowed");
                 }
-                if(name.isEmpty()) {
+                if (name.isEmpty()) {
                     etName.setError("Name required");
                     return;
                 }
-                if(!email.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                if (!email.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     etEmail.setError("Enter valid email");
                     return;
                 }
 
                 String ignoreId = existing == null ? null : existing.getId();
-                if(loginIdExists(loginId, ignoreId)) {
+                if (loginIdExists(loginId, ignoreId)) {
                     etLoginId.setError("This Login ID already exists");
                     return;
                 }
-                if(existing == null) {
+                if (existing == null) {
                     UserItem newStaff = new UserItem(
                             UUID.randomUUID().toString(),
                             loginId, name, email, phone, ROLE_STAFF);
@@ -185,6 +185,7 @@ public class A_UserManagement extends AppCompatActivity {
             }
         });
     }
+
     private boolean loginIdExists(String loginId, String ignoreId) {
         for (UserItem u : allUsers) {
             if (u.getLoginId() != null
@@ -209,7 +210,6 @@ public class A_UserManagement extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .show();
     }
-
 
     private void loadUsers() {
         userListener = new ValueEventListener() {
