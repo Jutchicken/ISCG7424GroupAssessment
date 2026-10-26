@@ -139,7 +139,6 @@ public class A_MainPage extends AppCompatActivity {
     private void loadCounts() {
         FirebaseDatabase db = FirebaseDatabase.getInstance(DB_URL);
 
-        // Menu items: every entry in menu_items
         watch(db.getReference("menu_items"), new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -160,7 +159,6 @@ public class A_MainPage extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // keep the last number shown
             }
         });
 
@@ -185,16 +183,7 @@ public class A_MainPage extends AppCompatActivity {
         watch(db.getReference("bookings"), new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String today = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(new Date());
-                int count = 0;
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    String date = child.child("date").getValue(String.class);
-                    String status = child.child("status").getValue(String.class);
-                    if (today.equals(date) && !"Cancelled".equals(status)) {
-                        count++;
-                    }
-                }
-                tvTodayBookingCount.setText(String.valueOf(count));
+                tvTodayBookingCount.setText(String.valueOf(snapshot.getChildrenCount()));
             }
 
             @Override
