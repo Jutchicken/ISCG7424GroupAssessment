@@ -16,7 +16,7 @@ public class C_BookingHolder extends RecyclerView.ViewHolder {
     TextView tvGuests;
     TextView tvTable;
     TextView tvStatus;
-
+    Button btnCancel;
 
     public C_BookingHolder(@NonNull View itemView) {
         super(itemView);
@@ -40,6 +40,8 @@ public class C_BookingHolder extends RecyclerView.ViewHolder {
         tvStatus = itemView.findViewById(
                 R.id.tv_customerBookingStatus
         );
+
+        btnCancel = itemView.findViewById(R.id.btnCustomerCancel);
 
     }
 }

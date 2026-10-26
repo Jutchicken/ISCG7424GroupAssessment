@@ -33,7 +33,7 @@ public class C_BookingList extends AppCompatActivity {
 
     private static final String DB_URL = "https://mobdevgroupassessment-664a8-default-rtdb.firebaseio.com";
 
-    Button btnCustomerListBack;
+    Button btnCustomerListBack, btnCustomerCancel;
 
     RecyclerView recyclerView;
 
