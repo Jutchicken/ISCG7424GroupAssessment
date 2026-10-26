@@ -36,11 +36,36 @@
 
     <DatePicker
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:id="@+id/datePicker"
         >
 
     </DatePicker>
+
+    <TimePicker
+        android:id="@+id/tpCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:timePickerMode="spinner"
+        >
+
+    </TimePicker>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="For how many?"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+
+    <NumberPicker
+        android:id="@+id/npCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </NumberPicker>
 
     <Button
         android:id="@+id/btn_customerBook"

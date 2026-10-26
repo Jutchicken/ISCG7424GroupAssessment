@@ -50,6 +50,6 @@
         android:layout_weight="1"
         android:clipToPadding="false"
         android:paddingBottom="8dp"
-        tools:listitem="@layout/staff_booking_item"/>
+        tools:listitem="@layout/customer_booking_item"/>
 
 </LinearLayout>
