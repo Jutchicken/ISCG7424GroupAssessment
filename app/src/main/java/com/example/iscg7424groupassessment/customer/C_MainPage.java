@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,11 +21,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iscg7424groupassessment.Login;
 import com.example.iscg7424groupassessment.R;
+import com.example.iscg7424groupassessment.staff.S_MainPage;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class C_MainPage extends AppCompatActivity {
 
-    CardView cvProfile;
-    CardView cvBook, cvEditReservations;
+    CardView cvProfile, cvBook, cvEditReservations;
+    TextView tvBookingCustomerCount;
+    DatabaseReference bookingDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +43,20 @@ public class C_MainPage extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+
         });
 
-
+        bookingDatabase = FirebaseDatabase.getInstance(
+                "https://mobdevgroupassessment-664a8-default-rtdb.firebaseio.com/"
+        ).getReference("bookings");
 
         cvProfile = findViewById(R.id.cv_cProfile);
         cvBook = findViewById(R.id.cv_customerBooking);
         cvEditReservations = findViewById(R.id.cv_customerEditReservations);
+        tvBookingCustomerCount = findViewById(R.id.tv_customerBookings);
 
+
+        loadBookedCount();
 
         cvProfile.setOnClickListener(v -> {
             Toast.makeText(getApplicationContext(),
@@ -72,6 +86,44 @@ public class C_MainPage extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),
                     C_BookingList.class);
             startActivity(intent);
+        });
+    }
+
+    private void loadBookedCount() {
+        bookingDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                int bookingCount = 0;
+                for (DataSnapshot bookingSnapshot : snapshot.getChildren()) {
+
+                    String status = bookingSnapshot.child("status")
+                            .getValue(String.class);
+                    if (status == null) {
+                        continue;
+                    }
+                    if (status.equalsIgnoreCase("Pending")) {
+                        bookingCount++;
+                    }
+                    if (status.equalsIgnoreCase("Confirmed")) {
+                        bookingCount++;
+                    }
+                }
+
+
+                tvBookingCustomerCount.setText(
+                        String.valueOf(bookingCount)
+                );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+                Toast.makeText(
+                        C_MainPage.this,
+                        "Failed to load bookings: " + error.getMessage(),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
         });
     }
 
