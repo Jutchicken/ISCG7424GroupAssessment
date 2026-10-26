@@ -80,12 +80,6 @@ public class C_BookingAdapter
                 "Status: " + booking.getStatus()
         );
 
-        boolean pending =
-                "Pending".equals(booking.getStatus());
-
-        holder.btnCancel.setVisibility(
-                pending ? View.VISIBLE : View.GONE
-        );
 
 
         holder.btnCancel.setOnClickListener(v -> {

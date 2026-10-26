@@ -21,6 +21,8 @@ import com.example.iscg7424groupassessment.R;
 import com.example.iscg7424groupassessment.staff.S_BookingRequest;
 import com.example.iscg7424groupassessment.staff.StaffBookingAdapter;
 import com.example.iscg7424groupassessment.staff.StaffTableBooking;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +37,9 @@ public class C_BookingList extends AppCompatActivity {
 
     private static final String DB_URL = "https://mobdevgroupassessment-664a8-default-rtdb.firebaseio.com";
 
-    Button btnCustomerListBack, btnCustomerCancel;
+    FirebaseAuth mAuth;
+
+    Button btnCustomerListBack;
 
     RecyclerView recyclerView;
 
@@ -44,6 +48,7 @@ public class C_BookingList extends AppCompatActivity {
     private TextView tvEmptyRequests;
 
     private DatabaseReference bookingRef;
+    private String uid;
 
 
     private ValueEventListener bookingListener;
@@ -62,13 +67,16 @@ public class C_BookingList extends AppCompatActivity {
             return insets;
         });
 
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        uid = firebaseUser.getUid();
+
         btnCustomerListBack = findViewById(R.id.btn_customerListBack);
-
-
-
         tvEmptyRequests = findViewById(R.id.tv_emptyCustomerBookings);
         recyclerView = findViewById(R.id.recyclerBookingRequests);
-        adapter = new C_BookingAdapter(bookingList, new C_BookingAdapter.OnBookingActionListener() {
+        adapter = new C_BookingAdapter(bookingList,
+                new C_BookingAdapter.OnBookingActionListener() {
                     @Override
                     public void onCancel(C_TableBooking booking) {
                         cancelBooking(booking);
@@ -114,7 +122,7 @@ public class C_BookingList extends AppCompatActivity {
                     if (booking != null) {
                         booking.setId(child.getKey());
 
-                        if ("Pending".equals(booking.getStatus())) {
+                        if (uid.equals(booking.getCustomerId()) && !"Cancelled".equals(booking.getStatus())) {
                             bookingList.add(booking);
                         }
                     }
