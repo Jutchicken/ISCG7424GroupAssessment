@@ -130,7 +130,7 @@ public class C_BookingRequest extends AppCompatActivity {
                 uid,
                 customerEmail,
                 tableNumber,
-                dp.getDayOfMonth() +"/"+ dp.getMonth() +"/"+ dp.getYear(),
+                dp.getDayOfMonth() +"/"+ (dp.getMonth()+1) +"/"+ dp.getYear(),
                 tp.getHour() +":"+ tp.getMinute(),
                 np.getValue(),
                 "Pending"

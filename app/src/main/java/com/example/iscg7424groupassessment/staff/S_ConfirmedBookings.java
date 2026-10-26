@@ -19,12 +19,5 @@ public class S_ConfirmedBookings extends AppCompatActivity {
         setContentView(R.layout.activity_staff_confirmed_bookings);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
-    public void btnSBack(View view) {
-        finish();
-    }
 }
