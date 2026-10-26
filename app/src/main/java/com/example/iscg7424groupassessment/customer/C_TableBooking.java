@@ -50,14 +50,14 @@ public class C_TableBooking {
         this.customerId = customerId;
     }
 
-    public String getCustomerName() {
+    public String getCustomerEmail() {
         if (customerEmail == null || customerEmail.isEmpty()) {
             return "Unknown";
         }
         return customerEmail;
     }
 
-    public void setCustomerEmail(String customerName) {
+    public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
     }
 

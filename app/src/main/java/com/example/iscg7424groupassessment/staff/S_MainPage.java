@@ -13,11 +13,17 @@ import androidx.cardview.widget.CardView;
 
 import com.example.iscg7424groupassessment.Login;
 import com.example.iscg7424groupassessment.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class S_MainPage extends AppCompatActivity {
 
     CardView cvConfirmedBooking, cvBookingStaffRequests;
     TextView tvBookingStaffCount, tvRequestStaffCount;
+    DatabaseReference bookingDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,11 @@ public class S_MainPage extends AppCompatActivity {
         cvBookingStaffRequests = findViewById(R.id.cv_bookingStaffRequests);
         tvBookingStaffCount = findViewById(R.id.tv_bookingStaffCount);
         tvRequestStaffCount = findViewById(R.id.tv_requestStaffCount);
+
+        bookingDatabase = FirebaseDatabase.getInstance(
+                "https://mobdevgroupassessment-664a8-default-rtdb.firebaseio.com/"
+        ).getReference("bookings");
+
 
         loadBookedCount();
 
@@ -68,27 +79,44 @@ public class S_MainPage extends AppCompatActivity {
     }
 
     private void loadBookedCount() {
-        SharedPreferences preferences = getSharedPreferences(
-                "BookingData",
-                MODE_PRIVATE
-        );
+        bookingDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                int requestCount = 0;
+                int bookingCount = 0;
+                for (DataSnapshot bookingSnapshot : snapshot.getChildren()) {
 
-        int bookingCount = preferences.getInt(
-                "bookingCount",
-                0
-        );
+                    String status = bookingSnapshot.child("status")
+                            .getValue(String.class);
+                    if (status == null) {
+                        continue;
+                    }
+                    if (status.equalsIgnoreCase("Pending")) {
+                        requestCount++;
+                    }
+                    if (status.equalsIgnoreCase("Confirmed")) {
+                        bookingCount++;
+                    }
+                }
 
-        int requestCount = preferences.getInt(
-                "requestCount",
-                0
-        );
+                tvRequestStaffCount.setText(
+                        String.valueOf(requestCount)
+                );
 
-        tvBookingStaffCount.setText(
-                String.valueOf(bookingCount)
-        );
+                tvBookingStaffCount.setText(
+                        String.valueOf(bookingCount)
+                );
+            }
 
-        tvRequestStaffCount.setText(
-                String.valueOf(requestCount)
-        );
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+                Toast.makeText(
+                        S_MainPage.this,
+                        "Failed to load bookings: " + error.getMessage(),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
     }
 }

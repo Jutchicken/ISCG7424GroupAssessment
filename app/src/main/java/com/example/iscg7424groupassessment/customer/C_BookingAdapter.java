@@ -48,7 +48,7 @@ public class C_BookingAdapter
         C_TableBooking booking = items.get(position);
 
         holder.tvCustomer.setText(
-                "Customer: " + booking.getCustomerName()
+                "Customer: " + booking.getCustomerEmail()
         );
 
         holder.tvDateTime.setText(
