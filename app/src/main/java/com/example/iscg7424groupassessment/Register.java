@@ -104,7 +104,7 @@ public class Register extends AppCompatActivity {
                 return;
             }
 
-            if (password.length() < 6) {
+            if (password.length() < 3) {
                 etPassword.setError("Password must be at least 6 characters");
                 return;
             }
