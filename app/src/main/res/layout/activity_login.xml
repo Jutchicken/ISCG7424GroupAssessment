@@ -13,7 +13,7 @@
         android:id="@+id/et_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Username/Email"/>
+        android:hint="Enter Email"/>
 
     <EditText
         android:id="@+id/et_password"

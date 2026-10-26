@@ -45,10 +45,18 @@
             android:layout_marginTop="8dp" />
 
         <EditText
-            android:id="@+id/et_name"
+            android:id="@+id/et_Fname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
+            android:hint="Full name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/et_Uname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:hint="Username"
             android:inputType="textPersonName" />
 
@@ -67,13 +75,6 @@
             android:layout_marginTop="15dp"
             android:hint="Phone Number"
             android:inputType="phone" />
-
-        <EditText
-            android:id="@+id/et_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:hint="ID" />
 
         <EditText
             android:id="@+id/et_password"

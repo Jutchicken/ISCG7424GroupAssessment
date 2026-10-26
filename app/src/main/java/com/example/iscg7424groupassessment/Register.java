@@ -9,14 +9,28 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 // Just UI, no actual working register feature in this
 
 public class Register extends AppCompatActivity {
     Spinner spinnerRole;
-    EditText etName, etEmail, etPhone, etID, etPassword, etConfirmPassword;
+    EditText etFullName,etUName, etEmail, etPhone, etPassword, etConfirmPassword;
     Button btnRegister, btnBackLogin;
+    FirebaseAuth mAuth;
+    DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +40,13 @@ public class Register extends AppCompatActivity {
 
         spinnerRole = findViewById(R.id.spin_accountType);
 
-        etName = findViewById(R.id.et_name);
+        etFullName = findViewById(R.id.et_Fname);
+        etUName = findViewById(R.id.et_Uname);
         etEmail = findViewById(R.id.et_email);
         etPhone = findViewById(R.id.et_phone);
-        etID = findViewById(R.id.et_id);
         etPassword = findViewById(R.id.et_password);
         etConfirmPassword = findViewById(R.id.et_confirmPassword);
+        mAuth = FirebaseAuth.getInstance();
 
         btnRegister = findViewById(R.id.btn_register);
         btnBackLogin = findViewById(R.id.btn_backLogin);
@@ -39,9 +54,13 @@ public class Register extends AppCompatActivity {
         // Account types
         String[] roles = {
                 "Customer",
-                "Supplier",
+                "Staff",
                 "Admin"
         };
+
+        database = FirebaseDatabase.getInstance(
+                "https://mobdevgroupassessment-664a8-default-rtdb.firebaseio.com/"
+        ).getReference("users");
 
         ArrayAdapter<String> roleAdapter =
                 new ArrayAdapter<>(this,
@@ -54,22 +73,19 @@ public class Register extends AppCompatActivity {
         // Register
         btnRegister.setOnClickListener(v -> {
 
-            String name = etName.getText().toString().trim();
+            String Fullname = etFullName.getText().toString().trim();
+            String Username = etUName.getText().toString().trim();
             String email = etEmail.getText().toString().trim();
             String phone = etPhone.getText().toString().trim();
-            String id = etID.getText().toString().trim();
             String password = etPassword.getText().toString();
-            String confirmPassword =
-                    etConfirmPassword.getText().toString();
-
-            String role =
-                    spinnerRole.getSelectedItem().toString();
+            String confirmPassword = etConfirmPassword.getText().toString();
+            String role = spinnerRole.getSelectedItem().toString();
 
             // Empty field check
-            if (name.isEmpty()
+            if (Fullname.isEmpty()
+                    || Username.isEmpty()
                     || email.isEmpty()
                     || phone.isEmpty()
-                    || id.isEmpty()
                     || password.isEmpty()
                     || confirmPassword.isEmpty()) {
 
@@ -84,35 +100,88 @@ public class Register extends AppCompatActivity {
 
             // Password check
             if (!password.equals(confirmPassword)) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Passwords do not match",
-                        Toast.LENGTH_SHORT
-                ).show();
+                etConfirmPassword.setError("Passwords do not match");
                 return;
             }
 
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Registration successful!",
-                    Toast.LENGTH_SHORT
-            ).show();
+            if (password.length() < 6) {
+                etPassword.setError("Password must be at least 6 characters");
+                return;
+            }
 
-            // Go to Login
-            Intent intent = new Intent(
-                    getApplicationContext(),
-                    Login.class
-            );
-            startActivity(intent);
-            finish();
+            btnRegister.setEnabled(false);
+
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                FirebaseUser firebaseUser = task.getResult().getUser();
+
+                                // if the user is not successfully created
+                                if (firebaseUser == null) {
+                                    btnRegister.setEnabled(true);
+                                    return;
+                                }
+
+                                String uid = firebaseUser.getUid();
+
+                                Map<String, Object> userData = new HashMap<>();
+
+                                userData.put("id", uid);
+                                userData.put("fullName", Fullname);
+                                userData.put("username", Username);
+                                userData.put("email", email);
+                                userData.put("phone", phone);
+                                userData.put("role", role);
+
+                                database.child(uid).setValue(userData)
+                                        .addOnSuccessListener(unused -> {
+                                            Toast.makeText(
+                                                    getApplicationContext(),
+                                                    "User Register Successful",
+                                                    Toast.LENGTH_SHORT).show();
+                                            mAuth.signOut();
+
+                                            Intent intent = new Intent(
+                                                    getApplicationContext(),
+                                                    Login.class
+                                            );
+                                            startActivity(intent);
+                                            finish();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            btnRegister.setEnabled(true);
+                                            Toast.makeText(
+                                                    getApplicationContext(),
+                                                    "Database Error: " + e.getMessage(),
+                                                    Toast.LENGTH_LONG).show();
+
+                                        });
+
+                            }
+                            else {
+                                btnRegister.setEnabled(true);
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "Unable to Register User: " +
+                                                (task.getException() != null
+                                                        ? task.getException().getMessage()
+                                                        : "Unknown error"),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
         });
 
         // Back to Login
         btnBackLogin.setOnClickListener(v -> {
+
             Intent intent = new Intent(
                     getApplicationContext(),
                     Login.class
             );
+
             startActivity(intent);
             finish();
         });
