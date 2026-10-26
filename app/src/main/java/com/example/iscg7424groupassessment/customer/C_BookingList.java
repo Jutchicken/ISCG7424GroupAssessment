@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iscg7424groupassessment.R;
 import com.example.iscg7424groupassessment.staff.S_BookingRequest;
+import com.example.iscg7424groupassessment.staff.StaffBookingAdapter;
 import com.example.iscg7424groupassessment.staff.StaffTableBooking;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -66,7 +68,12 @@ public class C_BookingList extends AppCompatActivity {
 
         tvEmptyRequests = findViewById(R.id.tv_emptyCustomerBookings);
         recyclerView = findViewById(R.id.recyclerBookingRequests);
-        adapter = new C_BookingAdapter(bookingList);
+        adapter = new C_BookingAdapter(bookingList, new C_BookingAdapter.OnBookingActionListener() {
+                    @Override
+                    public void onCancel(C_TableBooking booking) {
+                        cancelBooking(booking);
+                    }
+                });
         recyclerView.setLayoutManager(new LinearLayoutManager(
                 getApplicationContext()
         ));
@@ -135,6 +142,38 @@ public class C_BookingList extends AppCompatActivity {
             }
         };
 
+
         bookingRef.addValueEventListener(bookingListener);
+    }
+
+    private void cancelBooking(C_TableBooking booking) {
+        if (booking.getId() == null) {
+            return;
+        }
+
+        new AlertDialog.Builder(this).setTitle("Cancel Booking")
+                .setMessage("Cancel the booking for " + booking.getCustomerEmail() + "?")
+                .setNegativeButton("No", null)
+                .setPositiveButton("Cancel", (dialog, which) -> {
+                    updateBookingStatus( booking, "Cancelled");
+                }).show();
+    }
+
+    private void updateBookingStatus(C_TableBooking booking, String status) {
+        bookingRef.child(booking.getId())
+                .child("status")
+                .setValue(status)
+                .addOnSuccessListener(unused -> {
+                    Toast.makeText(
+                            C_BookingList.this,
+                            "Booking status updated",
+                            Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(error -> {
+                    Toast.makeText(
+                            C_BookingList.this,
+                            "Update failed: " + error.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                });
     }
 }

@@ -8,20 +8,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iscg7424groupassessment.R;
+import com.example.iscg7424groupassessment.staff.StaffBookingAdapter;
+import com.example.iscg7424groupassessment.staff.StaffBookingHolder;
 import com.example.iscg7424groupassessment.staff.StaffTableBooking;
 
 import java.util.List;
 
 public class C_BookingAdapter
         extends RecyclerView.Adapter<C_BookingHolder> {
+    public interface OnBookingActionListener {
 
+        void onCancel(C_TableBooking booking);
+    }
 
     private final List<C_TableBooking> items;
+    private final C_BookingAdapter.OnBookingActionListener listener;
 
     public C_BookingAdapter(
-            List<C_TableBooking> items
+            List<C_TableBooking> items,
+            C_BookingAdapter.OnBookingActionListener listener
     ) {
         this.items = items;
+        this.listener = listener;
     }
 
     @NonNull
@@ -72,7 +80,19 @@ public class C_BookingAdapter
                 "Status: " + booking.getStatus()
         );
 
+        boolean pending =
+                "Pending".equals(booking.getStatus());
 
+        holder.btnCancel.setVisibility(
+                pending ? View.VISIBLE : View.GONE
+        );
+
+
+        holder.btnCancel.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onCancel(booking);
+            }
+        });
 
 
     }
