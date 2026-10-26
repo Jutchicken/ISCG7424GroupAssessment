@@ -73,6 +73,10 @@
             android:name=".admin.A_UserManagement"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".staff.S_AssignTable"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

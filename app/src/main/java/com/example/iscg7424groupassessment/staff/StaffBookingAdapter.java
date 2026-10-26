@@ -80,14 +80,17 @@ public class StaffBookingAdapter
         );
 
         boolean pending =
-                "Pending".equals(booking.getStatus());
+                "Pending".equalsIgnoreCase(booking.getStatus());
+
+        boolean confirmed =
+                "Confirmed".equalsIgnoreCase(booking.getStatus());
 
         holder.btnConfirm.setVisibility(
                 pending ? View.VISIBLE : View.GONE
         );
 
         holder.btnCancel.setVisibility(
-                pending ? View.VISIBLE : View.GONE
+                (pending || confirmed) ? View.VISIBLE : View.GONE
         );
 
         holder.btnConfirm.setOnClickListener(v -> {

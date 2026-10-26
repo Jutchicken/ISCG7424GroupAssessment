@@ -32,14 +32,14 @@
                     android:layout_height="wrap_content"
                     android:text="Staff Dashboard"
                     android:textSize="26sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Welcome back, Staff"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -56,6 +56,9 @@
 
 
         <!-- Confirmed Booking + Booking Requests -->
+
+
+        <!-- Quick Overview -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -115,10 +118,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:gravity="center"
                         android:text="Booking Requests"
                         android:textSize="19sp"
-                        android:textStyle="bold"
-                        android:gravity="center" />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -126,15 +129,43 @@
 
         </LinearLayout>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_SAssignTable"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="25dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
 
-        <!-- Quick Overview -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Assign Table to Booking"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="30dp"
             android:text="Quick Overview"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
 
         <LinearLayout
@@ -165,13 +196,13 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textSize="30sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Bookings"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -199,13 +230,13 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textSize="30sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Requests"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -220,7 +251,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Logout" />
+            android:text="Logout"/>
 
     </LinearLayout>
 

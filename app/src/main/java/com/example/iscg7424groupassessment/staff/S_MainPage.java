@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class S_MainPage extends AppCompatActivity {
 
-    CardView cvConfirmedBooking, cvBookingStaffRequests;
+    CardView cvConfirmedBooking, cvBookingStaffRequests, cvAssignTable;
     TextView tvBookingStaffCount, tvRequestStaffCount;
     DatabaseReference bookingDatabase;
 
@@ -33,6 +33,7 @@ public class S_MainPage extends AppCompatActivity {
 
         cvConfirmedBooking = findViewById(R.id.cv_confirmedStaffBooking);
         cvBookingStaffRequests = findViewById(R.id.cv_bookingStaffRequests);
+        cvAssignTable = findViewById(R.id.cv_SAssignTable);
         tvBookingStaffCount = findViewById(R.id.tv_bookingStaffCount);
         tvRequestStaffCount = findViewById(R.id.tv_requestStaffCount);
 
@@ -57,6 +58,15 @@ public class S_MainPage extends AppCompatActivity {
                     S_MainPage.this,
                     S_BookingRequest.class
             );
+            startActivity(intent);
+        });
+
+        cvAssignTable.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    S_MainPage.this,
+                    S_AssignTable.class
+            );
+
             startActivity(intent);
         });
     }
@@ -99,23 +109,15 @@ public class S_MainPage extends AppCompatActivity {
                     }
                 }
 
-                tvRequestStaffCount.setText(
-                        String.valueOf(requestCount)
-                );
-
-                tvBookingStaffCount.setText(
-                        String.valueOf(bookingCount)
-                );
+                tvRequestStaffCount.setText(String.valueOf(requestCount));
+                tvBookingStaffCount.setText(String.valueOf(bookingCount));
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-
-                Toast.makeText(
-                        S_MainPage.this,
+                Toast.makeText(getApplicationContext(),
                         "Failed to load bookings: " + error.getMessage(),
-                        Toast.LENGTH_SHORT
-                ).show();
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

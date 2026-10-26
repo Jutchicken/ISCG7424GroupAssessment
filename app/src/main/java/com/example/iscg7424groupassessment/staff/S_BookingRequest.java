@@ -32,13 +32,14 @@ public class S_BookingRequest extends AppCompatActivity {
     private RecyclerView recyclerBookingRequests;
     private TextView tvEmptyRequests;
 
-    private final List<StaffTableBooking> bookingList =
-            new ArrayList<>();
+    private final List<StaffTableBooking> bookingList = new ArrayList<>();
 
     private StaffBookingAdapter SBAdapter;
     private Button btnStaffBRBack;
+    private DatabaseReference userRef;
     private DatabaseReference bookingRef;
     private ValueEventListener bookingListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,8 @@ public class S_BookingRequest extends AppCompatActivity {
 
         bookingRef = FirebaseDatabase.getInstance(DB_URL).getReference("bookings");
 
+        userRef = FirebaseDatabase.getInstance(DB_URL).getReference("users");
+
         loadBookingRequests();
 
         btnStaffBRBack.setOnClickListener(v -> {
@@ -91,24 +94,34 @@ public class S_BookingRequest extends AppCompatActivity {
         bookingListener = new ValueEventListener() {
 
             @Override
-            public void onDataChange(
-                    @NonNull DataSnapshot snapshot
-            ) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 bookingList.clear();
 
                 for (DataSnapshot child : snapshot.getChildren()) {
-                    StaffTableBooking booking =
-                            child.getValue(StaffTableBooking.class);
+                    StaffTableBooking booking = child.getValue(StaffTableBooking.class);
 
                     if (booking != null) {
                         booking.setId(child.getKey());
 
                         if ("Pending".equals(booking.getStatus())) {
                             bookingList.add(booking);
+                            String customerId = booking.getCustomerId();
+
+                            if (customerId != null && !customerId.isEmpty()) {
+
+                                userRef.child(customerId).child("fullName").get()
+                                    .addOnSuccessListener(userSnapshot -> {
+                                        String fullName = userSnapshot.getValue(String.class);
+
+                                            if (fullName != null && !fullName.isEmpty()) {
+                                                booking.setCustomerName(fullName);
+                                                SBAdapter.notifyDataSetChanged();
+                                            }
+                                    });
+                            }
                         }
                     }
                 }
-
                 SBAdapter.notifyDataSetChanged();
 
                 boolean empty = bookingList.isEmpty();
@@ -121,9 +134,7 @@ public class S_BookingRequest extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(
-                    @NonNull DatabaseError error
-            ) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(S_BookingRequest.this,
                         "Failed to load bookings: "
                                 + error.getMessage(),
