@@ -38,9 +38,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserHolder> {
     public void onBindViewHolder(@NonNull UserHolder holder, int position) {
         final UserItem user = items.get(position);
 
-        holder.tvInitials.setText(initials(user.getName()));
-        holder.tvName.setText(safe(user.getName()));
-        holder.tvLoginId.setText("ID: " + safe(user.getLoginId()));
+        holder.tvInitials.setText(initials(user.getFullName()));
+        holder.tvName.setText(safe(user.getFullName()));
+        holder.tvLoginId.setText("ID: " + safe(user.getUsername()));
 
         String email = safe(user.getEmail());
         holder.tvEmail.setText(email.isEmpty() ? "No Email" : email);

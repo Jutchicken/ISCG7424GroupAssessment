@@ -26,6 +26,7 @@ import com.example.iscg7424groupassessment.CustomerMainPage;
 import com.example.iscg7424groupassessment.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +37,9 @@ import com.google.firebase.firestore.auth.User;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class A_UserManagement extends AppCompatActivity {
@@ -116,16 +119,16 @@ public class A_UserManagement extends AppCompatActivity {
     private void showUserDialog(final UserItem existing) {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_admin_user, null);
 
-        final EditText etLoginId = view.findViewById(R.id.et_userLoginId);
-        final EditText etName = view.findViewById(R.id.et_userName);
+        final EditText etUsername = view.findViewById(R.id.et_userName);
+        final EditText etFullName = view.findViewById(R.id.et_userFullName);
         final EditText etEmail = view.findViewById(R.id.et_userEmail);
         final EditText etPhone = view.findViewById(R.id.et_userPhone);
 
         if (existing != null) {
-            etLoginId.setText(existing.getLoginId());
-            etLoginId.setEnabled(false);
+            etUsername.setText(existing.getUsername());
+            //etUsername.setEnabled(false);
 
-            etName.setText(existing.getName());
+            etFullName.setText(existing.getFullName());
             etEmail.setText(existing.getEmail());
             etPhone.setText(existing.getPhone());
         }
@@ -142,20 +145,20 @@ public class A_UserManagement extends AppCompatActivity {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String loginId = etLoginId.getText().toString().trim().toLowerCase();
-                String name = etName.getText().toString().trim();
+                String username = etUsername.getText().toString().trim().toLowerCase();
+                String fullName = etFullName.getText().toString().trim();
                 String email = etEmail.getText().toString().trim();
                 String phone = etPhone.getText().toString().trim();
 
-                if (loginId.isEmpty()) {
-                    etLoginId.setError("Login ID required");
+                if (username.isEmpty()) {
+                    etUsername.setError("Username required");
                     return;
                 }
-                if (loginId.contains(" ")) {
-                    etLoginId.setError("No spaces allowed");
+                if (username.contains(" ")) {
+                    etUsername.setError("No spaces allowed");
                 }
-                if (name.isEmpty()) {
-                    etName.setError("Name required");
+                if (fullName.isEmpty()) {
+                    etFullName.setError("Full name required");
                     return;
                 }
                 if (!email.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -164,18 +167,19 @@ public class A_UserManagement extends AppCompatActivity {
                 }
 
                 String ignoreId = existing == null ? null : existing.getId();
-                if (loginIdExists(loginId, ignoreId)) {
-                    etLoginId.setError("This Login ID already exists");
+                if (loginIdExists(username, ignoreId)) {
+                    etUsername.setError("This Login ID already exists");
                     return;
                 }
                 if (existing == null) {
                     UserItem newStaff = new UserItem(
                             UUID.randomUUID().toString(),
-                            loginId, name, email, phone, ROLE_STAFF);
+                            username, fullName, email, phone, ROLE_STAFF);
 
                     saveUser(newStaff, true);
                 } else {
-                    existing.setName(name);
+                    existing.setUsername(username);
+                    existing.setFullName(fullName);
                     existing.setEmail(email);
                     existing.setPhone(phone);
                     existing.setRole(ROLE_STAFF);
@@ -188,8 +192,8 @@ public class A_UserManagement extends AppCompatActivity {
 
     private boolean loginIdExists(String loginId, String ignoreId) {
         for (UserItem u : allUsers) {
-            if (u.getLoginId() != null
-                    && u.getLoginId().equalsIgnoreCase(loginId)
+            if (u.getUsername() != null
+                    && u.getUsername().equalsIgnoreCase(loginId)
                     && (ignoreId == null || !ignoreId.equals(u.getId()))) {
                 return true;
             }
@@ -200,7 +204,7 @@ public class A_UserManagement extends AppCompatActivity {
     private void confirmDelete(final UserItem user) {
         new AlertDialog.Builder(this)
                 .setTitle("Delete staff")
-                .setMessage("Delete " + safe(user.getName()) + "?")
+                .setMessage("Delete " + safe(user.getFullName()) + "?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -219,7 +223,7 @@ public class A_UserManagement extends AppCompatActivity {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     UserItem item = child.getValue(UserItem.class);
                     if (item != null) {
-                        item.setId(child.getKey());   // the key is always the real id
+                        item.setId(child.getKey());  // the key is always the real id
                         allUsers.add(item);
                     }
                 }
@@ -227,7 +231,7 @@ public class A_UserManagement extends AppCompatActivity {
                     @Override
                     public int compare(UserItem a, UserItem b) {
                         return String.CASE_INSENSITIVE_ORDER.compare(
-                                safe(a.getName()), safe(b.getName()));
+                                safe(a.getFullName()), safe(b.getFullName()));
                     }
                 });
                 applyFilter();
@@ -244,23 +248,34 @@ public class A_UserManagement extends AppCompatActivity {
     }
 
     private void saveUser(UserItem user, final boolean isNew) {
-        userRef.child(user.getId()).setValue(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(A_UserManagement.this,
-                                isNew ? "Staff added" : "Staff updated",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(A_UserManagement.this,
-                                "Save failed: " + e.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
+        Task<Void> task;
+        if (isNew) {
+            task = userRef.child(user.getId()).setValue(user);
+        } else {
+            Map<String, Object> changes = new HashMap<>();
+            changes.put("username", user.getUsername());
+            changes.put("fullName", user.getFullName());
+            changes.put("email", user.getEmail());
+            changes.put("phone", user.getPhone());
+            changes.put("role", user.getRole());
+            task = userRef.child(user.getId()).updateChildren(changes);
+        }
+
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(A_UserManagement.this,
+                        isNew ? "Staff added" : "Staff updated",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(A_UserManagement.this,
+                        "Save failed: " + e.getMessage(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void deleteUser(UserItem user) {

@@ -2,20 +2,19 @@ package com.example.iscg7424groupassessment.admin;
 
 public class UserItem {
     private String id;
-    private String loginId;
-    private String name;
+    private String username;
+    private String fullName;
     private String email;
     private String phone;
-    private String role;
+    private String role;   // "Staff" for the accounts the admin manages
 
     public UserItem() {
-
     }
 
-    public UserItem(String id, String loginId, String name, String email, String phone, String role) {
+    public UserItem(String id, String username, String fullName, String email, String phone, String role) {
         this.id = id;
-        this.loginId = loginId;
-        this.name = name;
+        this.username = username;
+        this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.role = role;
@@ -29,20 +28,20 @@ public class UserItem {
         this.id = id;
     }
 
-    public String getLoginId() {
-        return loginId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -61,6 +60,7 @@ public class UserItem {
         this.phone = phone;
     }
 
+    // Customers and admins also live in users/; the admin screen only lists "Staff"
     public String getRole() {
         return role;
     }
