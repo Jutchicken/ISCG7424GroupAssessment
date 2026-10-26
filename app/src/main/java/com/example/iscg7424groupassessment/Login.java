@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.iscg7424groupassessment.admin.A_MainPage;
+import com.example.iscg7424groupassessment.customer.C_MainPage;
 import com.example.iscg7424groupassessment.staff.S_MainPage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -101,7 +102,7 @@ public class Login extends AppCompatActivity {
                                                 S_MainPage.class);
                                     } else if (role.equalsIgnoreCase("Customer")) {
                                         intent = new Intent(getApplicationContext(),
-                                                CustomerMainPage.class);
+                                                C_MainPage.class);
                                     } else {
                                         Toast.makeText(getApplicationContext(),
                                                 "Invalid user role",

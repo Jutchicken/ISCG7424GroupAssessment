@@ -1,8 +1,8 @@
-package com.example.iscg7424groupassessment;
+package com.example.iscg7424groupassessment.customer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -11,28 +11,35 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class CustomerBookingDetail extends AppCompatActivity {
+import com.example.iscg7424groupassessment.R;
+
+public class C_BookingList extends AppCompatActivity {
+
+    Button btnCustomerListBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_customer_booking_detail);
+        setContentView(R.layout.activity_customer_booking_list);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-    }
 
-    public void btnCDBack(View view) {
-        Toast.makeText(getApplicationContext(),
-                "Going Back to Profile",
-                Toast.LENGTH_SHORT).show();
+        btnCustomerListBack = findViewById(R.id.btn_customerListBack);
 
-        Intent intent = new Intent(getApplicationContext(),
-                CustomerProfile.class);
-        startActivity(intent);
-        finish();
+        btnCustomerListBack.setOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(),
+                    "Going Back to Main Page",
+                    Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getApplicationContext(),
+                    C_MainPage.class);
+            startActivity(intent);
+            finish();
+        });
+
     }
 }

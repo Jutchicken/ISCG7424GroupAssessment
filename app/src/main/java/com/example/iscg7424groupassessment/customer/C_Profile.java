@@ -1,4 +1,4 @@
-package com.example.iscg7424groupassessment;
+package com.example.iscg7424groupassessment.customer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class CustomerProfile extends AppCompatActivity {
+import com.example.iscg7424groupassessment.Login;
+import com.example.iscg7424groupassessment.R;
+
+public class C_Profile extends AppCompatActivity {
 
     Button btnVBD;
 
@@ -34,7 +37,7 @@ public class CustomerProfile extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(getApplicationContext(),
-                    CustomerBookingDetail.class);
+                    C_BookingRequest.class);
             startActivity(intent);
         });
 
@@ -46,7 +49,7 @@ public class CustomerProfile extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(getApplicationContext(),
-                CustomerMainPage.class);
+                C_MainPage.class);
         startActivity(intent);
         finish();
     }
