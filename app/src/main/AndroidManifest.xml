@@ -30,19 +30,19 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CustomerMainPage"
+            android:name=".customer.C_MainPage"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CustomerProfile"
+            android:name=".customer.C_Profile"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CustomerBookingDetail"
+            android:name=".customer.C_BookingRequest"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".PropertyDetailPage"
+            android:name=".customer.C_BookingList"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity

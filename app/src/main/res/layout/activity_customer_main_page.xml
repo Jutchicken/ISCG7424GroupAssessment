@@ -1,108 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".CustomerMainPage">
-
+    tools:context=".customer.C_MainPage"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <EditText
-            android:id="@+id/et_search"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:hint="Search properties..."
-            android:singleLine="true" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_cProfile"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            app:cardCornerRadius="25dp">
-
-            <ImageView
-                android:id="@+id/iv_profile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_launcher_foreground"
-                android:scaleType="centerCrop" />
-
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
-
-
-
-    <TextView
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Categories"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:scrollbars="none">
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Dashboard"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Welcome back, Customer"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_cProfile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                app:cardCornerRadius="25dp">
+
+                <ImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_launcher_foreground"
+                    android:scaleType="centerCrop" />
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+        <!-- Section Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="Restaurant Booking"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+
+        <!-- Confirmed Booking + Booking Requests -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+
+            <!-- Booking Management -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_customerBooking"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Book Here!"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Booking Requests -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_customerEditReservations"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Edit \nReservations"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+
+        <!-- Quick Overview -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="Quick Overview"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_cAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All" />
 
-            <Button
-                android:id="@+id/btn_cApartment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Apartment" />
+            <!-- Display Confirmed Count -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="3dp">
 
-            <Button
-                android:id="@+id/btn_cHouse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="House" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_cStudio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Studio" />
+                    <TextView
+                        android:id="@+id/tv_customerBookings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bookings"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
         </LinearLayout>
-    </HorizontalScrollView>
 
 
+        <!-- Logout -->
+        <Button
+            android:onClick="btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Logout" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Featured Rentals"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+    </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerProperties"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="10dp" />
-
-</LinearLayout>
+</ScrollView>
