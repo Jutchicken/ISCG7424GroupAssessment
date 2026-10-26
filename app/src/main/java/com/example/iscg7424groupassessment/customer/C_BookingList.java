@@ -43,6 +43,7 @@ public class C_BookingList extends AppCompatActivity {
 
     private DatabaseReference bookingRef;
 
+
     private ValueEventListener bookingListener;
 
     private final List<C_TableBooking> bookingList =
@@ -63,7 +64,7 @@ public class C_BookingList extends AppCompatActivity {
 
 
 
-
+        tvEmptyRequests = findViewById(R.id.tv_emptyCustomerBookings);
         recyclerView = findViewById(R.id.recyclerBookingRequests);
         adapter = new C_BookingAdapter(bookingList);
         recyclerView.setLayoutManager(new LinearLayoutManager(
@@ -87,6 +88,7 @@ public class C_BookingList extends AppCompatActivity {
         });
 
     }
+
 
 
     private void loadBookingRequests() {

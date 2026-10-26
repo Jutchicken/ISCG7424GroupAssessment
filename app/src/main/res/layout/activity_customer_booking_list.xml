@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Booking Requests"
+            android:text="Your Bookings"
             android:textSize="28sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp"/>
@@ -33,12 +33,12 @@
 
 
     <TextView
-        android:id="@+id/tv_emptyBookingRequests"
+        android:id="@+id/tv_emptyCustomerBookings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:gravity="center"
-        android:text="No pending booking requests."
+        android:text="No bookings"
         android:textSize="16sp"
         android:visibility="gone"/>
 
