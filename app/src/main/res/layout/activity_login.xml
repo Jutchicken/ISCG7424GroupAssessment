@@ -10,16 +10,18 @@
     tools:context=".Login">
 
     <EditText
-        android:id="@+id/et_id"
+        android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Email"/>
+        android:hint="Enter Email"
+        android:inputType="textEmailAddress"/>
 
     <EditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Password"/>
+        android:hint="Enter Password"
+        android:inputType="textPassword"/>
 
     <Button
         android:onClick="btnLogin"
