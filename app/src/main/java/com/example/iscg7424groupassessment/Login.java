@@ -14,10 +14,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.iscg7424groupassessment.admin.A_MainPage;
 import com.example.iscg7424groupassessment.staff.S_MainPage;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Login extends AppCompatActivity {
 
-    EditText etID, etPassword;
+    EditText etEmail, etPassword;
+    FirebaseAuth mAuth;
+    DatabaseReference database;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,64 +36,99 @@ public class Login extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        etID = findViewById(R.id.et_id);
+        etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        database = FirebaseDatabase.getInstance(
+                "https://mobdevgroupassessment-664a8-default-rtdb.firebaseio.com/"
+        ).getReference("users");
 
     }
 
     public void btnLogin(View view) {
-        String id = etID.getText().toString().toLowerCase();
-        String password = etPassword.getText().toString().toLowerCase();
-        if (id.isEmpty() || password.isEmpty()){
-            Toast.makeText(getApplicationContext(),
-                    "Please enter ID or Password",
-                    Toast.LENGTH_SHORT).show();
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString();
 
-            etID.setText("");
-            etPassword.setText("");
-        }
-        else if (id.equals("com/example/iscg7424groupassessment/admin") && password.equals("com/example/iscg7424groupassessment/admin")){
-            Toast.makeText(getApplicationContext(),
-                    "Welcome, " + id,
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Please enter Email and Password",
                     Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(),
-                    A_MainPage.class);
-            startActivity(intent);
-            finish();
+            return;
         }
-        else if (id.equals("supplier") && password.equals("supplier")){
-            Toast.makeText(getApplicationContext(),
-                    "Welcome, " + id,
-                    Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(),
-                    S_MainPage.class);
-            startActivity(intent);
-            finish();
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
 
-        }
-        else if (id.equals("com/example/iscg7424groupassessment/customer") && password.equals("com/example/iscg7424groupassessment/customer")){
-            Toast.makeText(getApplicationContext(),
-                    "Welcome, " + id,
-                    Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(),
-                    CustomerMainPage.class);
-            startActivity(intent);
-            finish();
-        }
-        else if (id.equals("admin") && password.equals("admin")){
-            Toast.makeText(getApplicationContext(),
-                    "Welcome, " + id,
-                    Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(),
-                    A_MainPage.class);
-            startActivity(intent);
-            finish();
-        }
-        else {
-            Toast.makeText(getApplicationContext(),
-                    "Wrong ID or Password, Please try again",
-                    Toast.LENGTH_SHORT).show();
-        }
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+                        if (firebaseUser == null) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Unable to get user information",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        String uid = firebaseUser.getUid();
+
+                        database.child(uid).get()
+                                .addOnSuccessListener(snapshot -> {
+                                    if (!snapshot.exists()) {
+                                        Toast.makeText(getApplicationContext(),
+                                                "User information not found",
+                                                Toast.LENGTH_SHORT).show();
+                                        mAuth.signOut();
+                                        return;
+                                    }
+
+                                    String role = snapshot.child("role").getValue(String.class);
+
+                                    if (role == null) {
+                                        Toast.makeText(getApplicationContext(),
+                                                "User role not found",
+                                                Toast.LENGTH_SHORT).show();
+                                        mAuth.signOut();
+                                        return;
+                                    }
+
+                                    if (role.equalsIgnoreCase("Admin")) {
+                                        intent = new Intent(getApplicationContext(),
+                                                A_MainPage.class);
+                                    } else if (role.equalsIgnoreCase("Staff")) {
+                                        intent = new Intent(getApplicationContext(),
+                                                S_MainPage.class);
+                                    } else if (role.equalsIgnoreCase("Customer")) {
+                                        intent = new Intent(getApplicationContext(),
+                                                CustomerMainPage.class);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Invalid user role",
+                                                Toast.LENGTH_SHORT).show();
+                                        mAuth.signOut();
+                                        return;
+                                    }
+                                    Toast.makeText(getApplicationContext(),
+                                            "Login Successful",
+                                            Toast.LENGTH_SHORT).show();
+                                    startActivity(intent);
+                                    finish();
+
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(getApplicationContext(),
+                                            "Database Error: " + e.getMessage(),
+                                            Toast.LENGTH_LONG).show();
+                                    mAuth.signOut();
+                                });
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(),
+                                "Wrong Email or Password",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     public void btnRegister(View view) {
@@ -94,4 +136,4 @@ public class Login extends AppCompatActivity {
                 Register.class);
         startActivity(intent);
     }
-}
+};
