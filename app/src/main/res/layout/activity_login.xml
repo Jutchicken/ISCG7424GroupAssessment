@@ -9,6 +9,23 @@
     android:gravity="center"
     tools:context=".Login">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+
+        android:background="@drawable/rounded_corner"
+
+        android:elevation="20dp"
+        android:fontFamily="@font/tinos_bold_italic"
+        android:stateListAnimator="@null"
+        android:text="B. Seated"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="70sp">
+
+    </TextView>
+
     <EditText
         android:id="@+id/et_email"
         android:layout_width="match_parent"
