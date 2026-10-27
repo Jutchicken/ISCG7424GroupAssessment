@@ -28,6 +28,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_customerHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Customer Dashboard"
@@ -35,6 +36,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_customerSubHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"

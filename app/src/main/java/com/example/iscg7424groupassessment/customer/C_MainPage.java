@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.iscg7424groupassessment.Login;
 import com.example.iscg7424groupassessment.R;
 import com.example.iscg7424groupassessment.admin.A_MenuManagement;
+import com.example.iscg7424groupassessment.admin.UserItem;
 import com.example.iscg7424groupassessment.staff.S_MainPage;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,8 +36,9 @@ import com.google.firebase.database.ValueEventListener;
 public class C_MainPage extends AppCompatActivity {
 
     CardView cvProfile, cvBook, cvEditReservations, cvMenu;
-    TextView tvBookingCustomerCount;
+    TextView tvBookingCustomerCount, tvHeader, tvSubHeader;
     DatabaseReference bookingDatabase;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +62,13 @@ public class C_MainPage extends AppCompatActivity {
         cvBook = findViewById(R.id.cv_customerBooking);
         cvEditReservations = findViewById(R.id.cv_customerEditReservations);
         tvBookingCustomerCount = findViewById(R.id.tv_customerBookings);
+        tvHeader = findViewById(R.id.tv_customerHeader);
+        tvSubHeader = findViewById(R.id.tv_customerSubHeader);
 
 
+
+
+        displayUser();
         loadBookedCount();
 
         cvProfile.setOnClickListener(v -> {
@@ -137,6 +147,32 @@ public class C_MainPage extends AppCompatActivity {
                         "Failed to load bookings: " + error.getMessage(),
                         Toast.LENGTH_SHORT
                 ).show();
+            }
+        });
+    }
+
+    private void displayUser(){
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        String uid = firebaseUser.getUid();
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance(
+                "https://mobdevgroupassessment-664a8-default-rtdb.firebaseio.com/"
+        ).getReference("users/"+uid);
+
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserItem userItem = dataSnapshot.getValue(UserItem.class);
+                Log.d("StringOutput", "Value is: " + userItem.getId());
+                String name = userItem.getFullName();
+                tvHeader.setText(name+ "'s Dashboard");
+                tvSubHeader.setText("Welcome, " +name);
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("Database Error", "Failed to read value." + error.toException());
             }
         });
     }
