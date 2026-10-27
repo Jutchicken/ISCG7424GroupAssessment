@@ -137,7 +137,7 @@ public class C_BookingRequest extends AppCompatActivity {
 
                 );
         parentReference.child("bookings").child(bookingId).setValue(booking);
-        Toast.makeText(this,"added new fruit",
+        Toast.makeText(this,"Sent Booking Request",
                 Toast.LENGTH_LONG).show();
     }
 

@@ -34,6 +34,10 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".customer.C_Menu"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".customer.C_Profile"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />

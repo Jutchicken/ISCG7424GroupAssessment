@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iscg7424groupassessment.Login;
 import com.example.iscg7424groupassessment.R;
+import com.example.iscg7424groupassessment.admin.A_MenuManagement;
 import com.example.iscg7424groupassessment.staff.S_MainPage;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class C_MainPage extends AppCompatActivity {
 
-    CardView cvProfile, cvBook, cvEditReservations;
+    CardView cvProfile, cvBook, cvEditReservations, cvMenu;
     TextView tvBookingCustomerCount;
     DatabaseReference bookingDatabase;
 
@@ -50,6 +51,8 @@ public class C_MainPage extends AppCompatActivity {
                 "https://mobdevgroupassessment-664a8-default-rtdb.firebaseio.com/"
         ).getReference("bookings");
 
+
+        cvMenu = findViewById(R.id.cv_customerMenu);
         cvProfile = findViewById(R.id.cv_cProfile);
         cvBook = findViewById(R.id.cv_customerBooking);
         cvEditReservations = findViewById(R.id.cv_customerEditReservations);
@@ -67,6 +70,17 @@ public class C_MainPage extends AppCompatActivity {
                     C_Profile.class);
             startActivity(intent);
         });
+
+        cvMenu.setOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(),
+                    "Viewing Menu...",
+                    Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getApplicationContext(),
+                    C_Menu.class);
+            startActivity(intent);
+        });
+
 
         cvBook.setOnClickListener(v -> {
             Toast.makeText(getApplicationContext(),
